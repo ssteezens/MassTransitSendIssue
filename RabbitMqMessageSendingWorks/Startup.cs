@@ -4,7 +4,6 @@ using MassTransit.ServiceBusIntegration;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using RabbitMqMessageSendingWorks;
-using RabbitMqMessageSendingWorks.Consumers;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 namespace RabbitMqMessageSendingWorks;
@@ -18,7 +17,6 @@ public class Startup : FunctionsStartup
             .AddMassTransit(x =>
             {
                 x.SetKebabCaseEndpointNameFormatter();
-                x.AddConsumersFromNamespaceContaining<ConsumerNamespace>();
                 x.AddRequestClient<Message>(new Uri("queue:queue1"));
 
                 x.UsingRabbitMq((context, cfg) => { cfg.ConfigureEndpoints(context); });
